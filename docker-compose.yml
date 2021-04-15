@@ -1,0 +1,19 @@
+# microservicio docker a través de un contenedor 
+version: "3.7"
+services:
+    web:
+        build: .
+        volumes:
+            - ./scr_sj:/var/www/html
+        ports:
+            - 80:80
+        
+    db:
+        image: mysql
+        volumes:
+            - ./db_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: 12345
+            MYSQL_DATABASE: sistema_sj
+        ports:
+            - 3306:3306
