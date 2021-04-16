@@ -1,4 +1,4 @@
-# microservicio docker a través de un contenedor 
+# microservicio docker a través de un contenedor, servicios: php-Apache-MySQL  
 version: "3.7"
 services:
     web:
