@@ -1,6 +1,6 @@
 <?php
 /*Datos de conexion a la base de datos*/
-$db_host = "192.168.0.101";
+$db_host = "192.168.0.107";
 $db_user = "root";
 $db_pass = "12345";
 $db_name = "sistema_sj";
