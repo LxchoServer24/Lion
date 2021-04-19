@@ -76,13 +76,13 @@
                              <select class="form-control" id="estatus" name="estatus" value ="<?php echo $estatus;?>" required>
                                 <option value="Disponible" class="form-control">Disponible</option>
                                 <option value="Cerrada" class="form-control">Cerrada</option>
-                                <option value="Ocupada" class="form-control">Ocupada</option>
+                                <option value="Ocupada" class="form-control">Ocupada</option> 
                              </select>
                              <div class="valid-feedback">¡Ok válido!</div>
                              <div class="invalid-feedback">Complete el campo.</div>
                         </div>
                         <button class="btn btn-primary" type="submit" id="btnSave-edit" name="updatesala">Editar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <a href="../service_php/crudoff.php"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></a>
                     </form>
                 </div>
             </div>

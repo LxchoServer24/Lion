@@ -18,19 +18,19 @@
         $intervalo = $dt1->diff($dt2);
         $dif = (int)($intervalo->format('%h'));
         //echo $dif;
+
         
-        if($dif>2 || $dif==0){
-            echo '<script> alert("No se permiten juntas de más de dos horas"); </script>
-                  <nav class="navbar navbar-light bg-light justify-content-between">
-                    <a class="navbar-brand">ERROR: No se permiten juntas de más de dos horas</a>
-                    <form class="form-inline">
-                      <a href="../service_php/crudoff_j.php"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Regresar</button></a>
-                    </form>
-                  </nav> 
+        if($dif>2 || $dif==0){  
+          echo '<script> alert("No se permiten juntas de más de dos horas"); </script>
+          <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand">ERROR: No se permiten juntas de más de dos horas</a>
+            <form class="form-inline">
+              <a href="../service_php/crudoff_j.php"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Regresar</button></a>
+            </form>
+          </nav> 
             ';
         }else{
-            
-          //codigo comentado para validar que las juntas no se empalmen
+            //codigo comentado para validar que las juntas no se empalmen
            /* $querty = "SELECT * FROM juntas WHERE ID=$id";
             $query_ran = mysqli_query($con,$querty);
             if(mysqli_num_rows($query_ran) == 1){
@@ -48,7 +48,6 @@
               
               echo $aux;
              }*/
-
             //insersion
             $query = "INSERT INTO juntas (`ID_sala`,`h_inicio`,`h_final`) VALUES ('$id_sala','$h_inicial','$h_final')";
             $query_run = mysqli_query($con,$query);
@@ -72,6 +71,8 @@
                   </nav>
             ';
             }
+            //echo $id_sala;
+            
         }
 }
 

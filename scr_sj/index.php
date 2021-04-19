@@ -83,13 +83,13 @@
                                     <form action="../CRUD_juntas/alta.php" id="form1" method="post" class="needs-validation" novalidate>
                                         <div class="card-body">
                                             <div class="form-group">
-                                                <label>Elejir numero de salon</label>
-                                                <select class="form-control" id="salon" name="salon" values ="Elejir numero de salon" required>
+                                                <label>Elejir el ID de la sala</label>
+                                                <select class="form-control" id="salon" name="salon" required>
                                                     <?php
                                                         $sentencia="SELECT * FROM salas WHERE estatus='Disponible'";  //la variable "$sentencia" recibe todas las salas disponibles para hacer juntas
                                                         $resultado=mysqli_query($con,$sentencia);
                                                         while($filas=mysqli_fetch_assoc($resultado)){?>
-                                                          <option><?php echo $filas['numero'] ?></option>
+                                                          <option><?php echo $filas['ID'] ?></option>
                                                     <?php }?>
                                                 </select>
                          
@@ -172,18 +172,10 @@
 
    <!--script para bloquear fechas en dias pasados-->	                                              
     <script>
-        $(document).ready(function(){
-                minDate = new Date();
-                $("#h_inicial").datepicker({
-                    showAnim: 'drop',
-                    numberOfMonth: 1,
-                    minDate: minDate,
-                    dateFormat: 'dd-mm-yy hh-mm-ss',
-                    onClase: function (selectedDate){
-                        $('#h_final').datapicker("option","minDate ","selectedDate");
-                    }
-                }); 
-        });
+        let start = document.getElementById('h_inicial');
+        start.min = (new Date()).toISOString().substr(0,19);
+        let final = document.getElementById('h_final');
+        final.min = (new Date()).toISOString().substr(0,19);
     </script>
 
     <!--scripts de bootstrap para un mejor diseño-->

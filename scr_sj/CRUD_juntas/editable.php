@@ -13,31 +13,28 @@
         $query_ran = mysqli_query($con,$querty);
         if(mysqli_num_rows($query_ran) == 1){
            $row = mysqli_fetch_array($query_ran);
-           $numero = $row['numero'];
-           $estatus = $row['estatus'];  
+           $id_s = $row['ID_sala'];
+           $h_i = $row['h_inicio'];
+           $h_f = $row['h_final'];  
         }
     }
 
-    if(isset($_POST['updatesala'])){  //brinda los datos para actualizar
+    if(isset($_POST['updatejunta'])){  //brinda los datos para actualizar
         
         $id = $_POST['ID'];  //get
-        $numero = $_POST['numero'];
-        $estatus = $_POST['estatus'];
+        $id_s = $_POST['salon'];
+        $h_i = $_POST['h_inicial'];
+        $h_f = $_POST['h_final'];
         
-        $query = "UPDATE salas SET numero='$numero', estatus='$estatus' WHERE ID=$id";
+        $query = "UPDATE juntas SET ID_sala='$id_s', h_inicio='$h_i', h_final='$h_f' WHERE ID=$id";
         $query_run = mysqli_query($con,$query);
-
-        echo $id;
-        echo $numero;
-        echo $estatus;
-
 
         if($query_run){  //comprobación
             echo '<script> alert("Datos editados exitosamente"); </script>
                   <nav class="navbar navbar-light bg-light justify-content-between">
                         <a class="navbar-brand">Datos editados exitosamente</a>
                         <form class="form-inline">
-                            <a href="../service_php/crudoff.php"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Regresar</button></a>
+                            <a href="../service_php/crudoff_j.php"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Regresar</button></a>
                         </form>
                   </nav>
                 ';
@@ -46,7 +43,7 @@
                   <nav class="navbar navbar-light bg-light justify-content-between">
                         <a class="navbar-brand">Datos no editados</a>
                         <form class="form-inline">
-                            <a href="../service_php/crudoff.php"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Regresar</button></a>
+                            <a href="../service_php/crudoff_j.php"><button class="btn btn-outline-success my-2 my-sm-0" type="button">Regresar</button></a>
                         </form>
                   </nav>
                 ';
@@ -70,30 +67,48 @@
                 <div class="card-body">
                     <form id="form1" method="POST" class="needs-validation" action="editable.php?id=<?php echo $_GET['ID'];?>" novalidate>
                     <input type="hidden" class="form-control" value="<?php echo $id;?>" id="ID" name="ID" required>
-                        <div class="form-group">
-                             <label>Número</label>
-                             <input type="number" class="form-control" value="<?php echo $numero;?>" id="numero" name="numero" required>
-                             <div class="valid-feedback">¡Ok válido!</div>
-                             <div class="invalid-feedback">Complete el campo.</div>
-                        </div>
-                        <div class="form-group">
-                             <label>Estatus</label>
-                             <select class="form-control" id="estatus" name="estatus" value ="<?php echo $estatus;?>" required>
-                                <option value="Disponible" class="form-control">Disponible</option>
-                                <option value="Cerrada" class="form-control">Cerrada</option>
-                                <option value="Ocupada" class="form-control">Ocupada</option>
-                             </select>
-                             <div class="valid-feedback">¡Ok válido!</div>
-                             <div class="invalid-feedback">Complete el campo.</div>
-                        </div>
-                        <button class="btn btn-primary" type="submit" id="btnSave-edit" name="updatesala">Editar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <div class="form-group">
+                                                <label>ID del salon</label>
+                                                <select class="form-control" id="salon" name="salon" values ="<?php echo $id_s?>" required> <!---->
+                                                    <?php
+                                                        $sentencia="SELECT * FROM juntas ";  //la variable "$sentencia" recibe todas las salas disponibles para hacer juntas    ---SELECT salas.ID FROM salas WHERE estatus='Disponible' INNER JOIN juntas ON salas.ID=juntas.ID_sala";
+                                                        $resultado=mysqli_query($con,$sentencia);
+                                                        while($filas=mysqli_fetch_assoc($resultado)){?>
+                                                          <option><?php echo $filas['ID_sala'] ?></option>
+                                                    <?php }?>
+                                                </select>
+                         
+                                                <div class="valid-feedback">¡Ok válido!</div>
+                                                <div class="invalid-feedback">Complete el campo.</div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Hora inicial</label>
+                                                <input type="datetime-local" class="form-control" id="h_inicial" name="h_inicial" value="<?php echo $h_i;?>" required>
+                                                <div class="valid-feedback">¡Ok válido!</div>
+                                                <div class="invalid-feedback">Complete el campo.</div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Hora final</label>
+                                                <input type="datetime-local" class="form-control" id="h_final" name="h_final" value="<?php echo $h_f;?>" required>
+                                                <div class="valid-feedback">¡Ok válido!</div>
+                                                <div class="invalid-feedback">Complete el campo.</div>
+                                            </div>
+                        <button class="btn btn-primary" type="submit" id="btnSave-edit" name="updatejunta">Editar</button>
+                        <a href="../service_php/crudoff_j.php"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!--script para bloquear fechas en dias pasados-->	                                              
+<script>
+        let start = document.getElementById('h_inicial');
+        start.min = (new Date()).toISOString().substr(0,19);
+        let final = document.getElementById('h_final');
+        final.min = (new Date()).toISOString().substr(0,19);
+</script>
 
 <!--Links bootstrap para un mejor diseño -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

@@ -80,7 +80,7 @@ else{
     }
 
     //Trigger para la eliminación de registros cuya junta ya se terminó
-    $tri = "CREATE TRIGGER `d_j` BEFORE INSERT ON `juntas`
+    $tri = "CREATE TRIGGER `d_j` AFTER INSERT ON `juntas`
                 FOR EACH ROW BEGIN
                     DELETE FROM `juntas` WHERE `h_final` = now();
                 END; 
