@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="es-mx">
 <head>
-
+    <!--Head de la pagina principal, se incluyen links de bootstrap para un mejor diseño-->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,7 @@
 </head>
 <body>
 
+    <!--Header del cuerpo, estructura de la barra de navegación-->
     <header>
         <nav class="navbar navbar-light bg-light justify-content-between">
             <a class="navbar-brand">Salas de juntas</a>
@@ -31,8 +32,10 @@
         </nav>
     </header>
 
+     <!--Linea introductoria al panorama-->
     <h1 class="display-4">Gestión de salas de juntas</h1>
 
+     <!--Tabla que muestra todas las salas para las juntas-->
     <div class="container">
         <table class="table table-hover">
             <thead class="table-success">
@@ -45,16 +48,16 @@
                 <?php
                     $sentencia="SELECT * FROM salas";
                     $resultado=mysqli_query($con,$sentencia);
-                    while($filas=mysqli_fetch_assoc($resultado)){
-                        echo "<tr>";
-                            echo "<td>"; echo $filas['ID']; echo "</td>";
-                            echo "<td>"; echo $filas['numero']; echo "</td>";
-                            echo "<td>"; echo $filas['estatus']; echo "</td>";
-                            echo "<td><button type='button' class='btn btn-outline-warning updatebtn' >Editar sala</button></td>";
-                            echo "<td><button type='button' class='btn btn-outline-danger deletebtn'>Eliminar sala</button></td>";
-                            echo "</tr>";
-                    }
-                ?>
+                    while($filas=mysqli_fetch_assoc($resultado)){?>
+                        <tr>
+                            <td><?php echo $filas['ID'] ?></td>
+                            <td><?php echo $filas['numero'] ?></td>
+                            <td><?php echo $filas['estatus'] ?></td>
+                            <td><a href="../CRUD_sala/editable.php?ID=<?php echo $filas['ID']?>"><button type='button' class='btn btn-outline-warning updatebtn' >Editar sala</button></a></td>
+                            <td><a href="../CRUD_sala/baja.php?ID=<?php echo $filas['ID']?>"><button type='button' class='btn btn-outline-danger deletebtn'>Eliminar sala</button></a></td>
+                        </tr>
+                    
+                <?php }?>
             </tbody>
         </table>
     </div>
@@ -105,148 +108,7 @@
         </div>
     </div>
 
-    <!-- Modal para editar sala-->
-    <div id="myModalEdit" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Editar Sala</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card shadow-lg p-3 mb-5 bg-white ">
-                                    <div class="card-body">
-                                        <form id="form1" method="put" class="needs-validation" action="../CRUD_sala/editable.php" novalidate>
-                                            <div class="form-group">
-                                                <input type="text"  id="ID" name="ID">
-                                                <label>Número</label>
-                                                <input type="text" class="form-control" id="numero" name="numero" required>
-                                                <div class="valid-feedback">¡Ok válido!</div>
-                                                <div class="invalid-feedback">Complete el campo.</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Estatus</label>
-                                                <input type="text" class="form-control" id="estatus" name="estatus" required>
-                                                <select class="form-control" id="estatus" name="estatus" required>
-                                                    <option value="Disponible" class="form-control">Disponible</option>
-                                                    <option value="Cerrada" class="form-control">Cerrada</option>
-                                                </select>
-                                                <div class="valid-feedback">¡Ok válido!</div>
-                                                <div class="invalid-feedback">Complete el campo.</div>
-                                            </div>
-                                            <button class="btn btn-primary" type="submit" id="btnSave-edit" name="updatesala">Editar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-    <!-- Modal para borrar sala-->
-    <div id="myModalDelete" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Borrar Sala</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card shadow-lg p-3 mb-5 bg-white ">
-                                    <div class="card-body">
-                                        <form id="form1" method="put" class="needs-validation" action="../CRUD_sala/baja.php" novalidate>
-                                            <div class="form-group">
-                                                <label>ID</label>
-                                                <input type="text" class="form-control" id="ID" name="ID" required>
-                                                <div class="valid-feedback">¡Ok válido!</div>
-                                                <div class="invalid-feedback">Complete el campo.</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Número</label>
-                                                <input type="text" class="form-control" id="numero" name="numero" required>
-                                                <div class="valid-feedback">¡Ok válido!</div>
-                                                <div class="invalid-feedback">Complete el campo.</div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Estatus</label>
-                                                <input type="text" class="form-control" id="estatus" name="estatus" required>
-                                                <!--<select class="form-control" id="estatus" name="estatus" required>
-                                                    <option value="Disponible" class="form-control">Disponible</option>
-                                                    <option value="Cerrada" class="form-control">Cerrada</option>
-                                                </select>-->
-                                                <div class="valid-feedback">¡Ok válido!</div>
-                                                <div class="invalid-feedback">Complete el campo.</div>
-                                            </div>
-                                            <button class="btn btn-primary" type="submit" id="btnSave-edit" name="deletesala">Eliminar</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <script>
-        $(document).ready(function(){
-            $('.updatebtn').on('click', function(){
-                    
-                    $('#myModalEdit').modal('show');
-
-                    $tr = $(this).closest('tr');
-
-                    var data = $tr.children("td").map(function(){
-                        return $(this).text();
-                    }).get();
-                    
-                    console.log(data);
-                    
-                    $('#ID').val(data[0]);
-                    $('#numero').val(data[1]);
-                    $('#estatus').val(data[2]); 
-
-            });
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function(){
-            $('.deletebtn').on('click', function(){
-                    
-                    $('#myModalDelete').modal('show');
-
-                    $tr = $(this).closest('tr');
-
-                    var data = $tr.children("td").map(function(){
-                        return $(this).text();
-                    }).get();
-                    
-                    console.log(data);
-                    
-                    $('#ID').val(data[0]);
-                    $('#numero').val(data[1]);
-                    $('#estatus').val(data[2]); 
-
-            });
-        });
-    </script>
-
+    <!--scripts de bootstrap para un mejor diseño-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
      <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
